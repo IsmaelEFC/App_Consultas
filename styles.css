@@ -1,10 +1,12 @@
+/* Estilos generales */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: consolas;
+  font-family: consolas, sans-serif;
 }
 
+/* Estilos del cuerpo */
 body {
   display: flex;
   justify-content: center;
@@ -14,6 +16,7 @@ body {
   flex-direction: column;
 }
 
+/* Estilos del encabezado */
 header {
   background-color: #333;
   color: white;
@@ -22,15 +25,37 @@ header {
   text-align: center;
 }
 
+/* Mejoras visuales para h1 */
+header h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  background: linear-gradient(135deg, #ffbc00, #ff0058);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem;
+}
+
+/* Estilos de la sección principal */
 main {
   padding: 2rem;
   width: 80%;
 }
 
-section {
-  margin-bottom: 2rem;
+/* Mejoras visuales para h2 */
+section h2 {
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(135deg, #4dff03, #00d0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  margin-bottom: 1rem;
 }
 
+/* Estilos de contenedor */
 .container {
   display: flex;
   justify-content: center;
@@ -39,19 +64,20 @@ section {
   padding: 40px 0;
 }
 
+/* Estilos de las tarjetas (boxes) */
 .container .box {
   position: relative;
-  width: 250px; /* Reducir el tamaño */
-  height: 300px; /* Reducir el tamaño */
+  width: 250px;
+  height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px; /* Ajustar margen */
+  margin: 20px;
   transition: 0.5s;
 }
 
 .container .box::before {
-  content: " ";
+  content: ' ';
   position: absolute;
   top: 0;
   left: 50px;
@@ -64,7 +90,7 @@ section {
 }
 
 .container .box::after {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 50px;
@@ -111,7 +137,7 @@ section {
 }
 
 .container .box span::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -135,7 +161,7 @@ section {
 }
 
 .container .box span::after {
-  content: "";
+  content: '';
   position: absolute;
   bottom: 0;
   right: 0;
@@ -160,8 +186,7 @@ section {
 }
 
 @keyframes animate {
-  0%,
-  100% {
+  0%, 100% {
     transform: translateY(10px);
   }
 
@@ -173,7 +198,7 @@ section {
 .container .box .content {
   position: relative;
   left: 0;
-  padding: 20px 20px; /* Reducir padding */
+  padding: 20px 20px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -184,32 +209,32 @@ section {
 }
 
 .container .box:hover .content {
-  left: -15px; /* Ajustar desplazamiento */
-  padding: 40px 20px; /* Ajustar padding al hover */
+  left: -15px;
+  padding: 40px 20px;
 }
 
 .container .box .content h2 {
-  font-size: 1.5em; /* Reducir tamaño de fuente */
+  font-size: 1.5em;
   color: #fff;
   margin-bottom: 10px;
 }
 
 .container .box .content img {
-  max-width: 100px; /* Establecer ancho máximo */
-  max-height: 100px; /* Establecer altura máxima */
+  max-width: 100px;
+  max-height: 100px;
   width: auto;
   height: auto;
 }
 
 .container .box .content p {
-  font-size: 1em; /* Reducir tamaño de fuente */
+  font-size: 1em;
   margin-bottom: 10px;
   line-height: 1.4em;
 }
 
 footer {
-  background-color: #333;
-  color: white;
+  background-color: #000000;
+  color: rgb(9, 102, 25);
   padding: 1rem;
   width: 100%;
   text-align: center;
@@ -237,7 +262,7 @@ footer {
   }
 
   .container .box .content img {
-    max-width: 80px; /* Ajustar el tamaño para dispositivos móviles */
+    max-width: 80px;
     max-height: 80px;
   }
 
@@ -260,7 +285,7 @@ footer {
   }
 
   .container .box .content img {
-    max-width: 70px; /* Ajustar el tamaño para pantallas pequeñas */
+    max-width: 70px;
     max-height: 70px;
   }
 
