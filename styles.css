@@ -1,4 +1,3 @@
-/* styles.css */
 /* Variables CSS para mejor mantenimiento */
 :root {
   --color-primary: #080018;
@@ -8,6 +7,7 @@
   --gradient-box-1: linear-gradient(315deg, #09ff008a, #000000);
   --gradient-box-2: linear-gradient(315deg, #09ff0059, #000000);
   --gradient-box-3: linear-gradient(315deg, #09ff0028, #000000);
+  --gradient-box-4: linear-gradient(315deg, #09ff0010, #000000);
   --transition-default: 0.5s;
   --border-radius: 8px;
 }
@@ -54,11 +54,20 @@ header h1 {
 
 /* Estilos del contenido principal */
 main {
-  padding: 6rem 2rem 2rem;
-  width: 80%;
+  padding: 6rem 0 2rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 /* Estilos de secciones */
+section {
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
 section h2 {
   font-size: 2em;
   font-weight: bold;
@@ -76,24 +85,43 @@ section h3 {
   margin-bottom: 1rem;
 }
 
-/* Estilos de contenedor y cajas */
+/* Contenedor con scroll horizontal */
 .container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: 40px 0;
+    align-items: center;
+    padding: 40px 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 20px;
+    width: 100%;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    justify-content: center; /* Centra las cajas */
+    max-width: 1800px;      /* Limita el ancho máximo */
+    margin: 0 auto;         /* Centra el contenedor */
 }
 
+/* Ocultar scrollbar */
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Estilos de las cajas */
 .box {
   position: relative;
-  width: 250px;
-  height: 300px;
+  min-width: 200px;
+  width: 200px;
+  height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
-  transition: var(--transition-default);
+  flex: 0 0 auto;
+  scroll-snap-align: start;
 }
 
 /* Efectos de las cajas */
@@ -139,11 +167,37 @@ section h3 {
   background: var(--gradient-box-3);
 }
 
+.box:nth-child(4)::before,
+.box:nth-child(4)::after {
+  background: var(--gradient-box-4);
+}
+
+/* Repetición de gradientes para cajas adicionales */
+.box:nth-child(5)::before,
+.box:nth-child(5)::after {
+  background: var(--gradient-box-1);
+}
+
+.box:nth-child(6)::before,
+.box:nth-child(6)::after {
+  background: var(--gradient-box-2);
+}
+
+.box:nth-child(7)::before,
+.box:nth-child(7)::after {
+  background: var(--gradient-box-3);
+}
+
+.box:nth-child(8)::before,
+.box:nth-child(8)::after {
+  background: var(--gradient-box-4);
+}
+
 /* Estilos del contenido */
 .content {
   position: relative;
   left: 0;
-  padding: 20px;
+  padding: 15px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -151,6 +205,8 @@ section h3 {
   z-index: 1;
   transition: var(--transition-default);
   color: var(--color-text);
+  width: 100%;
+  height: 100%;
 }
 
 .box:hover .content {
@@ -161,10 +217,10 @@ section h3 {
 /* Estilos de imágenes */
 .content img {
   position: absolute;
-  top: -20px;
-  left: -20px;
-  max-width: 50px;
-  max-height: 50px;
+  top: -15px;
+  left: -15px;
+  max-width: 40px;
+  max-height: 40px;
   width: auto;
   height: auto;
   z-index: 2;
@@ -194,92 +250,4 @@ footer {
   width: 100%;
   text-align: center;
   position: relative;
-}
-
-/* Media Queries */
-@media (max-width: 768px) {
-  .container {
-      flex-direction: column;
-  }
-
-  .box {
-      width: 100%;
-      height: auto;
-      margin: 20px 0;
-  }
-
-  .content {
-      padding: 20px;
-  }
-
-  section h2 {
-      font-size: 1.2em;
-  }
-
-  .content img {
-      max-width: 80px;
-      max-height: 80px;
-  }
-}
-
-@media (max-width: 480px) {
-  .box {
-      width: 90%;
-  }
-
-  .content {
-      padding: 15px;
-  }
-
-  section h2 {
-      font-size: 1em;
-  }
-
-  .content img {
-      max-width: 70px;
-      max-height: 70px;
-  }
-}
-
-/* Mantenemos el tamaño original para desktop */
-.content img {
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  max-width: 50px;
-  max-height: 50px;
-  width: auto;
-  height: auto;
-  z-index: 2;
-  transition: transform var(--transition-default) ease;
-}
-
-/* Ajustamos tamaños para tablets */
-@media (max-width: 768px) {
-  .content img {
-      max-width: 40px;  
-      max-height: 40px; 
-      top: -15px;       
-      left: -15px;      
-  }
-}
-
-/* Ajustamos tamaños para móviles */
-@media (max-width: 480px) {
-  .content img {
-      max-width: 35px;
-      max-height: 35px;
-      top: -12px;      
-      left: -12px;      
-  }
-}
-
-/* Ajuste adicional para móviles muy pequeños */
-@media (max-width: 360px) {
-  .content img {
-      max-width: 30px;
-      max-height: 30px;
-      top: -10px;
-      left: -10px;
-  }
 }
