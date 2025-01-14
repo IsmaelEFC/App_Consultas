@@ -55,10 +55,10 @@ header h1 {
 /* Estilos del contenido principal */
 main {
   padding: 6rem 0 2rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Estilos de secciones */
@@ -85,43 +85,28 @@ section h3 {
   margin-bottom: 1rem;
 }
 
-/* Contenedor con scroll horizontal */
+/* Contenedor flexible */
 .container {
   display: flex;
-    align-items: center;
-    padding: 40px 20px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    gap: 20px;
-    width: 100%;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    justify-content: center; /* Centra las cajas */
-    max-width: 1800px;      /* Limita el ancho máximo */
-    margin: 0 auto;         /* Centra el contenedor */
-}
-
-/* Ocultar scrollbar */
-.container::-webkit-scrollbar {
-  display: none;
-}
-
-.container {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
 /* Estilos de las cajas */
 .box {
   position: relative;
+  flex: 1 1 calc(25% - 20px);
   min-width: 200px;
-  width: 200px;
+  max-width: 300px;
   height: 250px;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 0 0 auto;
-  scroll-snap-align: start;
 }
 
 /* Efectos de las cajas */
@@ -255,27 +240,29 @@ footer {
 /* Ajustes para pantallas más pequeñas */
 @media (max-width: 768px) {
   .container {
-    overflow-x: auto;
-    display: flex;
+    flex-direction: column;
     gap: 10px;
-    scroll-snap-type: x mandatory; 
     padding: 10px;
+    justify-content: center;
+    align-items: center;
   }
 
   .box {
-    min-width: 150px; 
-    width: 150px;
-    height: 200px; 
-    scroll-snap-align: start; 
+    flex: 1 1 auto;
+    min-width: 150px;
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
   }
 
   .content img {
-    max-width: 30px; 
+    max-width: 30;
     max-height: 30px;
   }
-}
-  .content img {
-    max-width: 30px; 
-    max-height: 30px;
+
+  .content{
+    width: calc(100% - 30px);
+    max-width: 300px;
   }
 }
