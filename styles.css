@@ -3,7 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: consolas, sans-serif;
+  font-family: Consolas, sans-serif;
 }
 
 /* Estilos del cuerpo */
@@ -23,6 +23,9 @@ header {
   padding: 1rem;
   width: 100%;
   text-align: center;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
 }
 
 /* Mejoras visuales para h1 */
@@ -38,7 +41,7 @@ header h1 {
 
 /* Estilos de la sección principal */
 main {
-  padding: 2rem;
+  padding: 4rem 2rem 2rem; /* Añadido margen superior por el header fijo */
   width: 80%;
 }
 
@@ -48,19 +51,15 @@ section h2 {
   font-weight: bold;
   color: #fff;
   text-align: center;
-  background: linear-gradient(135deg, #312020, #00ffdd);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
   margin-bottom: 1rem;
 }
 
-/* Mejoras visuales para h2 */
+/* Mejoras visuales para h3 */
 section h3 {
-  
   font-weight: bold;
   color: #fff;
-  text-align: center;  
+  text-align: center;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
   margin-bottom: 1rem;
 }
@@ -195,16 +194,6 @@ section h3 {
   opacity: 1;
 }
 
-@keyframes animate {
-  0%, 100% {
-    transform: translateY(10px);
-  }
-
-  50% {
-    transform: translate(-10px);
-  }
-}
-
 .container .box .content {
   position: relative;
   left: 0;
@@ -223,23 +212,42 @@ section h3 {
   padding: 40px 20px;
 }
 
-.container .box .content h2 {
-  font-size: 1.5em;
-  color: #fff;
-  margin-bottom: 10px;
+/* Añadido de transición a imágenes en hover */
+.container .box:hover .content img {
+  transform: scale(1.1); /* Amplía un poco la imagen */
+  transition: transform 0.5s ease;
 }
 
+/* Posicionar las imágenes en la esquina superior izquierda y sobresaliendo */
 .container .box .content img {
-  max-width: 100px;
-  max-height: 100px;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  max-width: 50px;
+  max-height: 50px;
   width: auto;
   height: auto;
+  z-index: 2;
 }
 
+/* Asegurar que el texto no sea cubierto por la imagen y llevarlo al costado contrario */
+.container .box .content h2,
 .container .box .content p {
-  font-size: 1em;
-  margin-bottom: 10px;
-  line-height: 1.4em;
+  position: absolute;
+  z-index: 3;
+  top: 60px;
+  right: 10px;
+}
+
+/* Estilos para las credenciales */
+.credentials {
+  font-size: 0.8em;
+  color: #fff;
+  text-align: center;
+  margin-top: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 5px;
+  border-radius: 5px;
 }
 
 footer {
@@ -302,4 +310,16 @@ footer {
   .container .box .content p {
     font-size: 0.8em;
   }
+}
+
+@media (max-width: 360px) {
+  .container .box {
+    width: 85%;
+    margin: 10px 0;
+  }
+
+  .container .box .content {
+    padding: 10px;
+  }
+
 }
