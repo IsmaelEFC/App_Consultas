@@ -1,4 +1,18 @@
-/* Estilos generales */
+/* styles.css */
+/* Variables CSS para mejor mantenimiento */
+:root {
+  --color-primary: #080018;
+  --color-header: #333;
+  --color-text: #fff;
+  --gradient-primary: linear-gradient(135deg, #a09393, #ccc2c5);
+  --gradient-box-1: linear-gradient(315deg, #09ff008a, #000000);
+  --gradient-box-2: linear-gradient(315deg, #09ff0059, #000000);
+  --gradient-box-3: linear-gradient(315deg, #09ff0028, #000000);
+  --transition-default: 0.5s;
+  --border-radius: 8px;
+}
+
+/* Reset y estilos base */
 * {
   margin: 0;
   padding: 0;
@@ -6,20 +20,20 @@
   font-family: Consolas, sans-serif;
 }
 
-/* Estilos del cuerpo */
+/* Estructura principal */
 body {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: #080018;
+  background: var(--color-primary);
   flex-direction: column;
 }
 
 /* Estilos del encabezado */
 header {
-  background-color: #333;
-  color: white;
+  background-color: var(--color-header);
+  color: var(--color-text);
   padding: 1rem;
   width: 100%;
   text-align: center;
@@ -28,44 +42,41 @@ header {
   z-index: 1000;
 }
 
-/* Mejoras visuales para h1 */
 header h1 {
   font-size: 2.5em;
   font-weight: bold;
-  background: linear-gradient(135deg, #a09393, #ccc2c5);
+  background: var(--gradient-primary);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
   margin-bottom: 1rem;
 }
 
-/* Estilos de la sección principal */
+/* Estilos del contenido principal */
 main {
-  padding: 6rem 2rem 2rem; /* Añadido margen superior por el header fijo */
+  padding: 6rem 2rem 2rem;
   width: 80%;
 }
 
-/* Mejoras visuales para h2 */
+/* Estilos de secciones */
 section h2 {
   font-size: 2em;
   font-weight: bold;
-  color: #fff;
+  color: var(--color-text);
   text-align: center;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
-  margin-bottom: 1rem;
-  margin-top: 2rem;
+  margin: 4rem 0 1rem;
 }
 
-/* Mejoras visuales para h3 */
 section h3 {
   font-weight: bold;
-  color: #fff;
+  color: var(--color-text);
   text-align: center;
   text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.4);
   margin-bottom: 1rem;
 }
 
-/* Estilos de contenedor */
+/* Estilos de contenedor y cajas */
 .container {
   display: flex;
   justify-content: center;
@@ -74,8 +85,7 @@ section h3 {
   padding: 40px 0;
 }
 
-/* Estilos de las tarjetas (boxes) */
-.container .box {
+.box {
   position: relative;
   width: 250px;
   height: 300px;
@@ -83,23 +93,12 @@ section h3 {
   justify-content: center;
   align-items: center;
   margin: 20px;
-  transition: 0.5s;
+  transition: var(--transition-default);
 }
 
-.container .box::before {
-  content: ' ';
-  position: absolute;
-  top: 0;
-  left: 50px;
-  width: 50%;
-  height: 100%;
-  background: #fff;
-  border-radius: 8px;
-  transform: skewX(15deg);
-  transition: 0.5s;
-}
-
-.container .box::after {
+/* Efectos de las cajas */
+.box::before,
+.box::after {
   content: '';
   position: absolute;
   top: 0;
@@ -107,120 +106,60 @@ section h3 {
   width: 50%;
   height: 100%;
   background: #fff;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   transform: skewX(15deg);
-  transition: 0.5s;
+  transition: var(--transition-default);
+}
+
+.box::after {
   filter: blur(30px);
 }
 
-.container .box:hover:before,
-.container .box:hover:after {
+/* Hover effects */
+.box:hover::before,
+.box:hover::after {
   transform: skewX(0deg);
   left: 20px;
   width: calc(100% - 90px);
 }
 
-.container .box:nth-child(1):before,
-.container .box:nth-child(1):after {
-  background: linear-gradient(315deg, #09ff008a, #000000);
+/* Gradientes específicos para cada caja */
+.box:nth-child(1)::before,
+.box:nth-child(1)::after {
+  background: var(--gradient-box-1);
 }
 
-.container .box:nth-child(2):before,
-.container .box:nth-child(2):after {
-  background: linear-gradient(315deg, #09ff0059, #000000);
+.box:nth-child(2)::before,
+.box:nth-child(2)::after {
+  background: var(--gradient-box-2);
 }
 
-.container .box:nth-child(3):before,
-.container .box:nth-child(3):after {
-  background: linear-gradient(315deg, #09ff0028, #000000);
+.box:nth-child(3)::before,
+.box:nth-child(3)::after {
+  background: var(--gradient-box-3);
 }
 
-.container .box span {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 5;
-  pointer-events: none;
-}
-
-.container .box span::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  opacity: 0;
-  transition: 0.1s;
-  animation: animate 2s ease-in-out infinite;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-}
-
-.container .box:hover span::before {
-  top: -50px;
-  left: 50px;
-  width: 100px;
-  height: 100px;
-  opacity: 1;
-}
-
-.container .box span::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  opacity: 0;
-  transition: 0.5s;
-  animation: animate 2s ease-in-out infinite;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-  animation-delay: -1s;
-}
-
-.container .box:hover span:after {
-  bottom: -50px;
-  right: 50px;
-  width: 100px;
-  height: 100px;
-  opacity: 1;
-}
-
-.container .box .content {
+/* Estilos del contenido */
+.content {
   position: relative;
   left: 0;
-  padding: 20px 20px;
+  padding: 20px;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   z-index: 1;
-  transition: 0.5s;
-  color: #fff;
+  transition: var(--transition-default);
+  color: var(--color-text);
 }
 
-.container .box:hover .content {
+.box:hover .content {
   left: -15px;
   padding: 40px 20px;
 }
 
-/* Añadido de transición a imágenes en hover */
-.container .box:hover .content img {
-  transform: scale(1.1); /* Amplía un poco la imagen */
-  transition: transform 0.5s ease;
-}
-
-/* Posicionar las imágenes en la esquina superior izquierda y sobresaliendo */
-.container .box .content img {
+/* Estilos de imágenes */
+.content img {
   position: absolute;
   top: -20px;
   left: -20px;
@@ -229,28 +168,25 @@ section h3 {
   width: auto;
   height: auto;
   z-index: 2;
+  transition: transform var(--transition-default) ease;
 }
 
-/* Asegurar que el texto no sea cubierto por la imagen y llevarlo al costado contrario */
-.container .box .content h2,
-.container .box .content p {
-  position: absolute;
-  z-index: 3;
-  top: 60px;
-  right: 10px;
+.box:hover .content img {
+  transform: scale(1.1);
 }
 
-/* Estilos para las credenciales */
+/* Estilos de credenciales */
 .credentials {
   font-size: 0.8em;
-  color: #fff;
+  color: var(--color-text);
   text-align: center;
   margin-top: 10px;
   background: rgba(0, 0, 0, 0.5);
   padding: 5px;
-  border-radius: 5px;
+  border-radius: var(--border-radius);
 }
 
+/* Estilos del footer */
 footer {
   background-color: #000000;
   color: rgb(9, 102, 25);
@@ -263,64 +199,44 @@ footer {
 /* Media Queries */
 @media (max-width: 768px) {
   .container {
-    flex-direction: column;
+      flex-direction: column;
   }
 
-  .container .box {
-    width: 100%;
-    height: auto;
-    margin: 20px 0;
+  .box {
+      width: 100%;
+      height: auto;
+      margin: 20px 0;
   }
 
-  .container .box .content {
-    padding: 20px;
+  .content {
+      padding: 20px;
   }
 
-  .container .box .content h2 {
-    font-size: 1.2em;
+  section h2 {
+      font-size: 1.2em;
   }
 
-  .container .box .content img {
-    max-width: 80px;
-    max-height: 80px;
-  }
-
-  .container .box .content p {
-    font-size: 0.9em;
+  .content img {
+      max-width: 80px;
+      max-height: 80px;
   }
 }
 
 @media (max-width: 480px) {
-  .container .box {
-    width: 90%;
+  .box {
+      width: 90%;
   }
 
-  .container .box .content {
-    padding: 15px;
+  .content {
+      padding: 15px;
   }
 
-  .container .box .content h2 {
-    font-size: 1em;
+  section h2 {
+      font-size: 1em;
   }
 
-  .container .box .content img {
-    max-width: 70px;
-    max-height: 70px;
+  .content img {
+      max-width: 70px;
+      max-height: 70px;
   }
-
-  .container .box .content p {
-    font-size: 0.8em;
-  }
-}
-
-@media (max-width: 360px) {
-  .container .box {
-    width: 85%;
-    margin: 10px 0;
-  }
-
-  .container .box .content {
-    padding: 10px;
-  }
-
 }
