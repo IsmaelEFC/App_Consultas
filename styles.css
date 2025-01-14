@@ -235,51 +235,51 @@ footer {
       font-size: 1em;
   }
 
-  /* Mantenemos el tamaño original para desktop */
+  .content img {
+      max-width: 70px;
+      max-height: 70px;
+  }
+}
+
+/* Mantenemos el tamaño original para desktop */
 .content img {
-    position: absolute;
-    top: -20px;
-    left: -20px;
-    max-width: 50px;
-    max-height: 50px;
-    width: auto;
-    height: auto;
-    z-index: 2;
-    transition: transform var(--transition-default) ease;
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  max-width: 50px;
+  max-height: 50px;
+  width: auto;
+  height: auto;
+  z-index: 2;
+  transition: transform var(--transition-default) ease;
 }
 
 /* Ajustamos tamaños para tablets */
 @media (max-width: 768px) {
-    .content img {
-        max-width: 40px;
-        max-height: 40px;
-        top: -15px;
-        left: -15px;
-    }
+  .content img {
+      max-width: 40px;  
+      max-height: 40px; 
+      top: -15px;       
+      left: -15px;      
+  }
 }
 
 /* Ajustamos tamaños para móviles */
 @media (max-width: 480px) {
-    .content img {
-        max-width: 35px;
-        max-height: 35px;
-        top: -12px;
-        left: -12px;
-    }
+  .content img {
+      max-width: 35px;
+      max-height: 35px;
+      top: -12px;      
+      left: -12px;      
+  }
 }
 
 /* Ajuste adicional para móviles muy pequeños */
 @media (max-width: 360px) {
-    .content img {
-        max-width: 30px;
-        max-height: 30px;
-        top: -10px;
-        left: -10px;
-    }
-}
-
   .content img {
-      max-width: 70px;
-      max-height: 70px;
+      max-width: 30px;
+      max-height: 30px;
+      top: -10px;
+      left: -10px;
   }
 }
