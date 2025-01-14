@@ -41,7 +41,7 @@ header h1 {
 
 /* Estilos de la sección principal */
 main {
-  padding: 4rem 2rem 2rem; /* Añadido margen superior por el header fijo */
+  padding: 6rem 2rem 2rem; /* Añadido margen superior por el header fijo */
   width: 80%;
 }
 
@@ -53,6 +53,7 @@ section h2 {
   text-align: center;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
   margin-bottom: 1rem;
+  margin-top: 2rem;
 }
 
 /* Mejoras visuales para h3 */
