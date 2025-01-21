@@ -1,0 +1,61 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Plataforma de consultas de interés en fuentes abiertas para vehículos, personas y otros servicios."
+    />
+    <title>Plataforma de Consultas</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <!-- Encabezado Principal -->
+    <header>
+        <div class="header-content">
+            <h1>PLATAFORMA DE CONSULTAS</h1>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-content">
+            <button class="nav-button active" data-section="vehiculos">Vehículos</button>
+            <button class="nav-button" data-section="personas">Personas</button>
+            <button class="nav-button" data-section="otros">Otros</button>
+        </div>
+    </nav>
+
+    <main>
+        <section id="vehiculos" class="section active">
+            <div class="cards-grid">
+                <!-- Cards for vehículos -->
+            </div>
+        </section>
+
+        <section id="personas" class="section">
+            <div class="cards-grid">
+                <!-- Cards for personas -->
+            </div>
+        </section>
+
+        <section id="otros" class="section">
+            <div class="cards-grid">
+                <!-- Cards for otros -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+      <p>Consultas de interés en fuentes abiertas - 2025 R4VEN</p>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
