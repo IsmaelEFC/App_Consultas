@@ -31,7 +31,7 @@ const consultaData = {
           title: 'Consulta situación migratoria',
           icon: '🌎',
           url: 'https://apps-publicas.interior.gob.cl/situacion-migratoria-web/login_inicio',
-          credentials: 'Email: GENE_CARABI | Contraseña: GEn17CAR2'
+          //credentials: 'Email: GENE_CARABI | Contraseña: GEn17CAR2'
       },
       {
           title: 'Consulta prestadores de salud',
