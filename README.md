@@ -3,7 +3,8 @@
 Una Progressive Web App (PWA) diseñada como un centro de acceso rápido a diversas fuentes de información abiertas (OSINT) en Chile, enfocada en la investigación y consulta de datos públicos.
 
  
-*(Nota: Reemplaza este enlace con una captura de pantalla real de tu aplicación)*
+<img width="1419" height="580" alt="image" src="https://github.com/user-attachments/assets/5b72ba94-91bb-4411-95ee-eec7fd3b25e3" />
+
 
 ## ✨ Características Principales
 
