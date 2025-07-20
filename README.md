@@ -3,7 +3,8 @@
 Una Progressive Web App (PWA) diseñada como un centro de acceso rápido a diversas fuentes de información abiertas (OSINT) en Chile, enfocada en la investigación y consulta de datos públicos.
 
  
-*(Nota: Reemplaza este enlace con una captura de pantalla real de tu aplicación)*
+<img width="1428" height="776" alt="image" src="https://github.com/user-attachments/assets/ac577df2-1cab-4f6e-bf94-03009a9ea194" />
+
 
 ## ✨ Características Principales
 
@@ -17,7 +18,7 @@ Una Progressive Web App (PWA) diseñada como un centro de acceso rápido a diver
 
 Simplemente accede al siguiente enlace para usar la aplicación:
 
-**[Acceder a la Plataforma de Consultas](https://tu-usuario.github.io/tu-repositorio/)** 
+**[Acceder a la Plataforma de Consultas](https://ismaelefc.github.io/App_Consultas/)** 
 *(Nota: Reemplaza este enlace con la URL de tu GitHub Pages)*
 
 Para instalarla, busca el ícono de instalación en la barra de direcciones de tu navegador (Chrome, Edge) o usa la opción "Añadir a pantalla de inicio" en tu móvil.
