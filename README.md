@@ -18,8 +18,8 @@ Una Progressive Web App (PWA) diseñada como un centro de acceso rápido a diver
 
 Simplemente accede al siguiente enlace para usar la aplicación:
 
-**[Acceder a la Plataforma de Consultas](https://tu-usuario.github.io/tu-repositorio/)** 
-*(Nota: Reemplaza este enlace con la URL de tu GitHub Pages)*
+**[Acceder a la Plataforma de Consultas](https://ismaelefc.github.io/App_Consultas/)** 
+
 
 Para instalarla, busca el ícono de instalación en la barra de direcciones de tu navegador (Chrome, Edge) o usa la opción "Añadir a pantalla de inicio" en tu móvil.
 
@@ -36,7 +36,7 @@ Si deseas ejecutar el proyecto localmente:
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/tu-repositorio.git
+   git clone https://ismaelefc.github.io/App_Consultas/
    ```
 2. Abre el archivo `index.html` en tu navegador.
 
