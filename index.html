@@ -1,0 +1,75 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Plataforma de consultas de interés en fuentes abiertas para vehículos, personas y otros servicios." />
+  <title>Plataforma de Consultas</title>
+  <!-- PWA: Manifest y Theme Color -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <!-- PWA: Tags para iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+</head>
+
+<body>
+  <!-- Encabezado Principal -->
+  <header>
+    <div class="header-content">
+      <h1>PLATAFORMA DE CONSULTAS</h1>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-content">
+      <button class="nav-button active" data-section="vehiculos">Vehículos</button>
+      <button class="nav-button" data-section="personas">Personas</button>
+      <button class="nav-button" data-section="otros">Otros</button>
+    </div>
+  </nav>
+
+  <main>
+    <section id="vehiculos" class="section active">
+      <div class="cards-grid">
+        <!-- Cards for vehículos -->
+      </div>
+    </section>
+
+    <section id="personas" class="section">
+      <div class="cards-grid">
+        <!-- Cards for personas -->
+      </div>
+    </section>
+
+    <section id="otros" class="section">
+      <div class="cards-grid">
+        <!-- Cards for otros -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Consultas de interés en fuentes abiertas - 2025 R4VEN</p>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    // Registrar el Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => console.log('Service Worker registrado con éxito:', registration.scope))
+          .catch(err => console.log('Fallo en el registro del Service Worker:', err));
+      });
+    }
+  </script>
+</body>
+
+</html>
