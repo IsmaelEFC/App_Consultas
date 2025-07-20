@@ -7,16 +7,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
     content="Plataforma de consultas de interés en fuentes abiertas para vehículos, personas y otros servicios." />
+  <!-- Security: Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com;">
   <title>Plataforma de Consultas</title>
   <!-- PWA: Manifest y Theme Color -->
   <link rel="manifest" href="manifest.json" />
   <meta name="theme-color" content="#0f172a" />
   <!-- PWA: Tags para iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <!-- PWA: Standard mobile web app tag -->
+  <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <link rel="apple-touch-icon" href="icons/icon-192x192.png" />
+  <!-- Performance: Carga asíncrona de CSS -->
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
 </head>
 
 <body>
@@ -44,11 +50,19 @@
       <div class="cards-grid">
         <!-- Cards for vehículos -->
       </div>
+      <div class="no-results">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <p>No se encontraron resultados para tu búsqueda.</p>
+      </div>
     </section>
 
     <section id="personas" class="section">
       <div class="cards-grid">
         <!-- Cards for personas -->
+      </div>
+      <div class="no-results">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <p>No se encontraron resultados para tu búsqueda.</p>
       </div>
     </section>
 
@@ -56,14 +70,18 @@
       <div class="cards-grid">
         <!-- Cards for otros -->
       </div>
+      <div class="no-results">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <p>No se encontraron resultados para tu búsqueda.</p>
+      </div>
     </section>
   </main>
 
   <footer>
-    <p>Consultas de interés en fuentes abiertas - 2025 R4VEN</p>
+    <p>&copy; 2025 R4VEN - Plataforma de Consultas OSINT</p>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
   <script>
     // Registrar el Service Worker
     if ('serviceWorker' in navigator) {

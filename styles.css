@@ -7,7 +7,7 @@
   --nav-bg: rgba(15, 23, 42, 0.7);       /* Azul oscuro más transparente */
   --accent-glow: rgba(129, 140, 248, 0.2); /* Indigo brillante */
   --text-primary: #f1f5f9;              /* Gris muy claro (casi blanco) */
-  --text-secondary: #94a3b8;            /* Gris azulado (mejor contraste) */
+  --text-secondary: #b0bec5;            /* Gris azulado aún más claro para un contraste perfecto */
   --button-hover: rgba(99, 102, 241, 0.4); /* Indigo hover */
   --button-active: #6366f1;             /* Indigo sólido */
   --card-hover: rgba(99, 102, 241, 0.15); /* Indigo hover para cards */
@@ -120,6 +120,11 @@ nav {
   transform: translateY(-2px);
 }
 
+.nav-button:active {
+  transform: scale(0.95);
+  transition: transform 0.1s ease;
+}
+
 .nav-button.active {
   background: var(--button-active);
   color: white;
@@ -135,9 +140,6 @@ main {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeIn 0.5s ease forwards;
 }
 
 .card {
@@ -148,6 +150,10 @@ main {
   overflow: hidden;
   transition: all 0.3s ease;
   border: 1px solid rgba(99, 102, 241, 0.1);
+  /* Propiedades para la animación escalonada */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.5s ease-out forwards;
 }
 
 .card::before {
@@ -219,6 +225,23 @@ main {
   border: 1px solid rgba(99, 102, 241, 0.2);
 }
 
+.no-results {
+  display: none; /* Oculto por defecto */
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-secondary);
+}
+
+.no-results i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.no-results p {
+  font-size: 1.25rem;
+}
+
 .card a {
   text-decoration: none;
   color: inherit;
@@ -234,13 +257,12 @@ footer {
 
 .section {
   display: none;
-  opacity: 0;
-  transform: translateY(20px);
+  /* Prevents the footer from jumping when switching tabs (reduces CLS) */
+  min-height: 40vh;
 }
 
 .section.active {
   display: block;
-  animation: fadeIn 0.5s ease forwards;
 }
 
 @keyframes fadeIn {

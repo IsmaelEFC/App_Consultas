@@ -1,10 +1,11 @@
-const CACHE_NAME = 'plataforma-consultas-cache-v1';
+const CACHE_NAME = 'plataforma-consultas-cache-v2';
 const urlsToCache = [
   '.',
   'index.html',
   'styles.css',
   'script.js',
   'manifest.json',
+  'data.json',
   'icons/icon-192x192.png',
   'icons/icon-512x512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
@@ -19,6 +20,7 @@ self.addEventListener('install', event => {
         console.log('Cache abierta y guardando app shell');
         return cache.addAll(urlsToCache);
       })
+      .then(() => self.skipWaiting()) // Forzar la activación del nuevo SW
   );
 });
 
@@ -60,5 +62,6 @@ self.addEventListener('activate', event => {
         })
       );
     })
+    .then(() => self.clients.claim()) // Tomar control de los clientes abiertos
   );
 });

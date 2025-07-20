@@ -1,92 +1,4 @@
-const consultaData = {
-  vehiculos: [
-      {
-          title: 'Consulta encargos',
-          icon: 'fa-solid fa-car',
-          url: 'https://www.autoseguro.gob.cl/'
-      },
-      {
-          title: 'Consulta propietario',
-          icon: 'fa-solid fa-magnifying-glass',
-          url: 'https://www.volanteomaleta.com/'
-      },
-      {
-          title: 'Consulta antecedentes',
-          icon: 'fa-solid fa-triangle-exclamation',
-          url: 'https://www.patentechile.com/'
-      },
-      {
-          title: 'Consulta transporte público',
-          icon: 'fa-solid fa-bus',
-          url: 'https://apps.mtt.cl/consultaweb/'
-      }
-  ],
-  personas: [
-      {
-          title: 'Consulta RUN o nombre',
-          icon: 'fa-solid fa-address-card',
-          url: 'https://www.nombrerutyfirma.com'
-      },
-      {
-          title: 'Rutificador',
-          icon: 'fa-solid fa-id-badge',
-          url: 'https://rutificador.histomed.cl/index.php'
-      },
-      {
-          title: 'Consulta situación migratoria',
-          icon: 'fa-solid fa-globe',
-          url: 'https://apps-publicas.interior.gob.cl/situacion-migratoria-web/login_inicio'
-          // credentials: 'Email: GENE_CARABI | Contraseña: GEn17CAR2' // Descomentado para demostración
-      },
-      {
-          title: 'Consulta prestadores de salud',
-          icon: 'fa-solid fa-staff-snake',
-          url: 'https://rnpi.superdesalud.gob.cl/#'
-      },
-      {
-          title: 'Búsqueda de abogados',
-          icon: 'fa-solid fa-scale-balanced',
-          url: 'https://www.pjud.cl/transparencia/busqueda-de-abogados'
-      }
-  ],
-  otros: [
-      {
-          title: 'Consulta compañía telefónica',
-          icon: 'fa-solid fa-mobile-screen-button',
-          url: 'https://www.numerosportados.cl/PublicWebsite/'
-      },
-      {
-          title: 'Consulta multas Santiago',
-          icon: 'fa-solid fa-ban',
-          url: 'https://pagos.munistgo.cl/pagopci/multas.aspx'
-      },
-      {
-          title: 'Consulta infracciones fiscalización',
-          icon: 'fa-solid fa-clipboard-list',
-          url: 'http://rrvv.fiscalizacion.cl/MTTVias2019/'
-      },
-      {
-          title: 'Consulta de Dirección',
-          icon: 'fa-solid fa-map-location-dot',
-          url: 'https://www.correos.cl/web/guest/codigo-postal'
-      },
-      {
-          title: 'Propietario por Dirección (Agua)',
-          icon: 'fa-solid fa-house-user',
-          url: 'https://m.aguasandinas.cl/web/aguasandinas/pagar-mi-cuenta'
-      },
-      {
-          title: 'Consulta por Mapa (SII)',
-          icon: 'fa-solid fa-map',
-          url: 'https://www4.sii.cl/mapasui/internet/#/contenido/index.html'
-      },
-      {
-          title: 'Consulta Diario Oficial',
-          icon: 'fa-solid fa-newspaper',
-          url: 'https://www.diariooficial.interior.gob.cl/'
-      }
-  ]
-};
+let consultaData = {};
 
 function createCard(item) {
   return `
@@ -96,7 +8,7 @@ function createCard(item) {
                   <div class="icon-container">
                       <i class="${item.icon}"></i>
                   </div>
-                  <h3 class="card-title">${item.title}</h3>
+                  <h2 class="card-title">${item.title}</h2>
                   ${item.credentials ? `<p class="credentials">${item.credentials}</p>` : ''}
               </div>
           </a>
@@ -105,9 +17,19 @@ function createCard(item) {
 }
 
 function loadSection(sectionId) {
+  if (!consultaData[sectionId]) {
+    console.error(`No data found for section: ${sectionId}`);
+    return;
+  }
   const section = document.getElementById(sectionId);
   const cardsGrid = section.querySelector('.cards-grid');
   cardsGrid.innerHTML = consultaData[sectionId].map(createCard).join('');
+
+  // Aplicar animación escalonada a las tarjetas
+  const cards = cardsGrid.querySelectorAll('.card');
+  cards.forEach((card, index) => {
+    card.style.animationDelay = `${index * 50}ms`; // 50ms de retraso entre cada tarjeta
+  });
 }
 
 // Navigation handling
@@ -132,6 +54,10 @@ function switchTab(sectionId) {
     section.classList.toggle('active', section.id === sectionId);
   });
 
+  // Actualizar el título de la página dinámicamente
+  const sectionName = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+  document.title = `${sectionName} - Plataforma de Consultas`;
+
   // Limpiar la búsqueda al cambiar de pestaña
   searchInput.value = '';
   filterCards('');
@@ -150,12 +76,22 @@ function filterCards(searchTerm) {
   const activeSection = document.querySelector('.section.active');
   if (!activeSection) return;
 
+  let visibleCount = 0;
   const cards = activeSection.querySelectorAll('.card');
   cards.forEach(card => {
     const title = card.querySelector('.card-title').textContent.toLowerCase();
     const shouldShow = title.includes(term);
     card.style.display = shouldShow ? 'block' : 'none';
+    if (shouldShow) {
+      visibleCount++;
+    }
   });
+
+  // Mostrar u ocultar el mensaje de "no resultados"
+  const noResultsMessage = activeSection.querySelector('.no-results');
+  if (noResultsMessage) {
+    noResultsMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
 }
 
 searchInput.addEventListener('input', (e) => {
@@ -163,10 +99,18 @@ searchInput.addEventListener('input', (e) => {
 });
 
 // Carga inicial: Cargar solo la primera pestaña activa
-document.addEventListener('DOMContentLoaded', () => {
-  // Selecciona el botón activo, o el primer botón si ninguno está activo.
-  const initialActiveButton = document.querySelector('.nav-button.active') || document.querySelector('.nav-button');
-  if (initialActiveButton) {
-    switchTab(initialActiveButton.dataset.section);
+document.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const response = await fetch('data.json');
+    consultaData = await response.json();
+
+    // Selecciona el botón activo, o el primer botón si ninguno está activo.
+    const initialActiveButton = document.querySelector('.nav-button.active') || document.querySelector('.nav-button');
+    if (initialActiveButton) {
+      switchTab(initialActiveButton.dataset.section);
+    }
+  } catch (error) {
+    console.error('Failed to load consultation data:', error);
+    // Aquí podrías mostrar un mensaje de error al usuario en la UI.
   }
 });
