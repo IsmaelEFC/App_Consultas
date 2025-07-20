@@ -36,7 +36,7 @@ Si deseas ejecutar el proyecto localmente:
 
 1. Clona el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/tu-repositorio.git
+   git clone IsmaelEFC/App_Consultas
    ```
 2. Abre el archivo `index.html` en tu navegador.
 
