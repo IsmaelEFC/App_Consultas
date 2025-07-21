@@ -2,20 +2,76 @@
   "name": "Plataforma de Consultas",
   "short_name": "Consultas",
   "description": "Plataforma de consultas de interés en fuentes abiertas para vehículos, personas y otros servicios.",
-  "start_url": ".",
+  "start_url": "/App_Consultas-main/index.html",
+  "scope": "/App_Consultas-main/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
+  "prefer_related_applications": false,
   "icons": [
+    {
+      "src": "icons/icon-72x72.png",
+      "type": "image/png",
+      "sizes": "72x72"
+    },
+    {
+      "src": "icons/icon-96x96.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "icons/icon-128x128.png",
+      "type": "image/png",
+      "sizes": "128x128"
+    },
+    {
+      "src": "icons/icon-144x144.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "icons/icon-152x152.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
     {
       "src": "icons/icon-192x192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-384x384.png",
+      "type": "image/png",
+      "sizes": "384x384"
     },
     {
       "src": "icons/icon-512x512.png",
       "type": "image/png",
       "sizes": "512x512"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "screenshots/screenshot1.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Consultar Vehículos",
+      "short_name": "Vehículos",
+      "description": "Consulta información de vehículos",
+      "url": "/App_Consultas-main/index.html?section=vehiculos"
+    },
+    {
+      "name": "Consultar Personas",
+      "short_name": "Personas",
+      "description": "Consulta información de personas",
+      "url": "/App_Consultas-main/index.html?section=personas"
     }
   ]
 }
