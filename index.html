@@ -45,7 +45,7 @@
     // Registrar el Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/App_Consultas-main/sw.js')
+        navigator.serviceWorker.register('sw.js', { scope: './' })
           .then(registration => {
             console.log('ServiceWorker registrado con éxito:', registration.scope);
           })
