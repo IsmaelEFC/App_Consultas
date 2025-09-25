@@ -75,11 +75,6 @@
       "url": "https://pagos.munistgo.cl/pagopci/multas.aspx"
     },
     {
-      "title": "Consulta infracciones fiscalización",
-      "icon": "fa-solid fa-clipboard-list",
-      "url": "http://rrvv.fiscalizacion.cl/MTTVias2019/"
-    },
-    {
       "title": "Consulta de Dirección",
       "icon": "fa-solid fa-map-location-dot",
       "url": "https://www.correos.cl/web/guest/codigo-postal"
@@ -103,6 +98,21 @@
       "title": "Buscador de Mutualidades (Chile)",
       "icon": "fa-solid fa-building-shield",
       "url": "https://www.asociaciondemutuales.cl/buscador-mutualidades/"
+    },
+    {
+      "title": "Pago de Multas (SMC)",
+      "icon": "fa-solid fa-file-invoice-dollar",
+      "url": "https://pago.smc.cl/pagoRMNPv2/(S(5bd0iqtyezgjljocziiqtved))/Login.aspx?ReturnUrl=%2fpagoRMNPv2%2fSistema%2fPrincipal.aspx%3fparam1%3dvP6%2fmd4I4bvcVwUDrCKY5OA7EY6ps1R%2bB9yuVRQrxQQB7%2fHEe4q%2bHTKjYpi1MlrlWPj292vzb8VKvsnx0lV7hDVv94tp93l26AnbP46QChurIgcC7MxNgPXQ7Oo3ZK9VAcUL0QcXSpxa%2bH9fJaw2ZTV9e%2bnBJqpADlByCnLT6rqf7kjhxKi7SBk42noWodyTlQjyARkQr1I5XWzM7tBVltZL8bsaHObzpFNOZIdccMsDGSNAOVdZB%2bkGNAdRNNPYiZxPnbYWeJdV7%2fEXJX5yTzBEA2IbsDeD%2b%2fHfgJ2RnecuRBVuimQQli9NZJ%2b6xZ0X%26param2%3dc%2b9qc1VBAxOW2mjNGkGkHQ3tLCgkzFqJ%2bJzKqVuu7Dk%3d&param1=vP6/md4I4bvcVwUDrCKY5OA7EY6ps1R+B9yuVRQrxQQB7/HEe4q+HTKjYpi1MlrlWPj292vzb8VKvsnx0lV7hDVv94tp93l26AnbP46QChurIgcC7MxNgPXQ7Oo3ZK9VAcUL0QcXSpxa+H9fJaw2ZTV9e+nBJqpADlByCnLT6rqf7kjhxKi7SBk42noWodyTlQjyARkQr1I5XWzM7tBVltZL8bsaHObzpFNOZIdccMsDGSNAOVdZB+kGNAdRNNPYiZxPnbYWeJdV7/EXJX5yTzBEA2IbsDeD+/HfgJ2RnecuRBVuimQQli9NZJ+6xZ0X&param2=c+9qc1VBAxOW2mjNGkGkHQ3tLCgkzFqJ+JzKqVuu7Dk="
+    },
+    {
+      "title": "Consulta de Causas (Santiago)",
+      "icon": "fa-solid fa-folder-open",
+      "url": "https://tramites.munistgo.cl/consultaCausas/login.aspx"
+    },
+    {
+      "title": "Búsqueda de Documentos (Juzgado)",
+      "icon": "fa-solid fa-file-lines",
+      "url": "https://appl.smc.cl/JuzgadoDoc/Login.aspx?ReturnUrl=%2fjuzgadodoc%2ffrmBusqueda.aspx"
     }
   ]
 }
