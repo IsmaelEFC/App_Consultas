@@ -1,0 +1,180 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Plataforma de consultas de interés en fuentes abiertas para vehículos, personas y otros servicios." />
+  <!-- Security: Content Security Policy -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;">
+  <title>Plataforma de Consultas</title>
+  <!-- PWA: Manifest y Theme Color -->
+  <link rel="manifest" href="manifest.json" />
+  <!-- PWA: Configuración básica -->
+  <meta name="theme-color" content="#f8f9fa" />
+  <meta name="application-name" content="Plataforma de Consultas" />
+  <meta name="apple-mobile-web-app-title" content="Consultas" />
+  <meta name="msapplication-TileColor" content="#f8f9fa" />
+  <meta name="msapplication-config" content="browserconfig.xml" />
+  
+  <!-- PWA: Configuración para iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Consultas" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-startup-image" href="icons/icon-512.png" />
+  
+  <!-- PWA: Configuración para Android -->
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="msapplication-navbutton-color" content="#0f172a" />
+  
+  <!-- PWA: Iconos -->
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+  <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon">
+  <!-- Performance: Carga asíncrona de CSS -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+  
+  <!-- PWA: Carga del service worker -->
+  <script>
+    // Registrar el Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js', { scope: './' })
+          .then(registration => {
+            console.log('ServiceWorker registrado con éxito:', registration.scope);
+          })
+          .catch(error => {
+            console.error('Error al registrar el ServiceWorker:', error);
+          });
+      });
+    }
+    
+    // Manejar el evento beforeinstallprompt para personalizar el prompt de instalación
+    let deferredPrompt;
+    const addToHomeButton = document.createElement('button');
+    
+    window.addEventListener('beforeinstallprompt', (e) => {
+      // Prevenir que Chrome 67 y versiones anteriores muestren automáticamente el prompt
+      e.preventDefault();
+      // Guardar el evento para que pueda ser activado más tarde
+      deferredPrompt = e;
+      
+      // Mostrar el botón de instalación
+      addToHomeButton.textContent = 'Instalar App';
+      addToHomeButton.style.position = 'fixed';
+      addToHomeButton.style.bottom = '20px';
+      addToHomeButton.style.right = '20px';
+      addToHomeButton.style.padding = '10px 15px';
+      addToHomeButton.style.backgroundColor = '#0f172a';
+      addToHomeButton.style.color = 'white';
+      addToHomeButton.style.border = 'none';
+      addToHomeButton.style.borderRadius = '5px';
+      addToHomeButton.style.cursor = 'pointer';
+      addToHomeButton.style.zIndex = '1000';
+      document.body.appendChild(addToHomeButton);
+      
+      // Manejar el clic en el botón
+      addToHomeButton.addEventListener('click', () => {
+        // Ocultar el botón
+        addToHomeButton.style.display = 'none';
+        // Mostrar el prompt de instalación
+        deferredPrompt.prompt();
+        // Esperar a que el usuario responda al prompt
+        deferredPrompt.userChoice.then((choiceResult) => {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('El usuario aceptó la instalación');
+          } else {
+            console.log('El usuario rechazó la instalación');
+          }
+          deferredPrompt = null;
+        });
+      });
+    });
+    
+    // Manejar el evento appinstalled
+    window.addEventListener('appinstalled', (evt) => {
+      console.log('Aplicación instalada con éxito');
+      // Ocultar el botón de instalación
+      if (addToHomeButton && addToHomeButton.parentNode) {
+        addToHomeButton.parentNode.removeChild(addToHomeButton);
+      }
+    });
+  </script>
+</head>
+
+<body>
+  <!-- Encabezado Principal -->
+  <header>
+    <div class="header-content">
+      <h1>Plataforma de Consultas</h1>
+      <div class="search-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="search-input" placeholder="Buscar en la sección actual..." />
+      </div>
+    </div>
+  </header>
+
+  <!-- Navegación de Secciones -->
+  <nav>
+    <div class="nav-buttons">
+      <button class="nav-button active" data-section="vehiculos">
+        <i class="fa-solid fa-car"></i>
+        <span>Vehículos</span>
+      </button>
+      <button class="nav-button" data-section="personas">
+        <i class="fa-solid fa-address-card"></i>
+        <span>Personas</span>
+      </button>
+      <button class="nav-button" data-section="otros">
+        <i class="fa-solid fa-clipboard-list"></i>
+        <span>Otros</span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <section id="vehiculos" class="section active">
+      <div class="cards-grid">
+        <!-- Cards for vehículos -->
+      </div>
+      <div class="no-results">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <p>No se encontraron resultados para tu búsqueda.</p>
+      </div>
+    </section>
+
+    <section id="personas" class="section">
+      <div class="cards-grid">
+        <!-- Cards for personas -->
+      </div>
+      <div class="no-results">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <p>No se encontraron resultados para tu búsqueda.</p>
+      </div>
+    </section>
+
+    <section id="otros" class="section">
+      <div class="cards-grid">
+        <!-- Cards for otros -->
+      </div>
+      <div class="no-results">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <p>No se encontraron resultados para tu búsqueda.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 R4VEN - Plataforma de Consultas OSINT</p>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+
+</html>
