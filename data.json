@@ -108,11 +108,6 @@
       "title": "Consulta de Causas (Santiago)",
       "icon": "fa-solid fa-folder-open",
       "url": "https://tramites.munistgo.cl/consultaCausas/login.aspx"
-    },
-    {
-      "title": "Búsqueda de Documentos (Juzgado)",
-      "icon": "fa-solid fa-file-lines",
-      "url": "https://appl.smc.cl/JuzgadoDoc/Login.aspx?ReturnUrl=%2fjuzgadodoc%2ffrmBusqueda.aspx"
     }
   ]
 }
