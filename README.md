@@ -69,4 +69,5 @@ Puedes personalizar fácilmente la aplicación modificando los siguientes archiv
 
 ---
 
-*Creado por R4VEN - 2025*
+*Creado por Ismael Flores - 2025*
+
