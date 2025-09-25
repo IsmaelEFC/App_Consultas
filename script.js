@@ -81,7 +81,7 @@ function filterCards(searchTerm) {
   cards.forEach(card => {
     const title = card.querySelector('.card-title').textContent.toLowerCase();
     const shouldShow = title.includes(term);
-    card.style.display = shouldShow ? 'block' : 'none';
+    card.classList.toggle('hidden', !shouldShow);
     if (shouldShow) {
       visibleCount++;
     }

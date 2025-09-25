@@ -46,6 +46,21 @@
       "title": "Búsqueda de abogados",
       "icon": "fa-solid fa-scale-balanced",
       "url": "https://www.pjud.cl/transparencia/busqueda-de-abogados"
+    },
+    {
+      "title": "Antecedentes Judiciales (Colombia)",
+      "icon": "fa-solid fa-gavel",
+      "url": "https://antecedentes.policia.gov.co:7005/WebJudicial/"
+    },
+    {
+      "title": "Notificaciones Rojas (Interpol)",
+      "icon": "fa-solid fa-flag",
+      "url": "https://www.interpol.int/es/Como-trabajamos/Notificaciones/Notificaciones-rojas/Ver-las-notificaciones-rojas"
+    },
+    {
+      "title": "Consulta Cédula (Venezuela)",
+      "icon": "fa-solid fa-id-card",
+      "url": "https://www.sistemaspnp.com/cedula/"
     }
   ],
   "otros": [
@@ -83,6 +98,11 @@
       "title": "Consulta Diario Oficial",
       "icon": "fa-solid fa-newspaper",
       "url": "https://www.diariooficial.interior.gob.cl/"
+    },
+    {
+      "title": "Buscador de Mutualidades (Chile)",
+      "icon": "fa-solid fa-building-shield",
+      "url": "https://www.asociaciondemutuales.cl/buscador-mutualidades/"
     }
   ]
 }

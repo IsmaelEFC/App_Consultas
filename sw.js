@@ -1,242 +1,105 @@
-// Versión del caché - Incrementar este número cuando se actualicen los recursos
-const CACHE_VERSION = 'v6';
-const CACHE_NAME = `plataforma-consultas-cache-${CACHE_VERSION}`;
-const SYNC_EVENT = 'sync-cache';
-const REFRESH_CACHE_EVENT = 'refresh-cache';
-const NOTIFICATION_TITLE = 'Plataforma de Consultas';
-const NOTIFICATION_OPTIONS = {
-  body: '¡Hay una nueva versión disponible!',
-  icon: '/App_Consultas-main/icons/icon-192x192.png',
-  badge: '/App_Consultas-main/icons/icon-72x72.png',
-  tag: 'update-available',
-  renotify: true,
-  vibrate: [200, 100, 200, 100, 200, 100, 200]
-};
-const CACHE_ASSETS = [
-  '/App_Consultas-main/index.html',
-  '/App_Consultas-main/offline.html',
-  '/App_Consultas-main/styles.css',
-  '/App_Consultas-main/script.js',
-  '/App_Consultas-main/manifest.json',
-  '/App_Consultas-main/data.json',
+// Versión del caché
+const CACHE_NAME = 'app-links-cache-v1';
+const OFFLINE_URL = 'offline.html';
+
+// Archivos a cachear (ajusta según sea necesario)
+const urlsToCache = [
+  '/',
+  'index.html',
+  'styles.css',
+  'script.js',
+  'manifest.json',
+  'data.json',
+  'offline.html',
+  'icons/icon-192x192.png',
+  'icons/icon-512x512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css'
 ];
 
-// Archivos a almacenar en caché
-const urlsToCache = [
-  ...CACHE_ASSETS,
-  '/' // Página raíz
-];
-
-// Agregar íconos a la caché si existen
-const iconSizes = [72, 96, 128, 144, 152, 192, 384, 512];
-iconSizes.forEach(size => {
-  const iconPath = `/App_Consultas-main/icons/icon-${size}x${size}.png`;
-  if (!urlsToCache.includes(iconPath)) {
-    urlsToCache.push(iconPath);
-  }
-});
-
-// Función para instalar recursos en caché
-const installResources = async () => {
-  try {
-    console.log('[Service Worker] Iniciando instalación de recursos');
-    const cache = await caches.open(CACHE_NAME);
-    
-    // Intentar agregar todos los recursos a la caché
-    await cache.addAll(urlsToCache);
-    
-    console.log('[Service Worker] Recursos almacenados en caché exitosamente');
-    return true;
-  } catch (error) {
-    console.error('[Service Worker] Error al instalar recursos:', error);
-    
-    // Si hay un error, intentar agregar los recursos uno por uno
-    if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
-      console.log('[Service Worker] Error de red, intentando cargar recursos individualmente');
-      try {
-        const cache = await caches.open(CACHE_NAME);
-        const promises = urlsToCache.map(url => 
-          cache.add(url).catch(err => 
-            console.warn(`[Service Worker] No se pudo almacenar ${url}:`, err)
-          )
-        );
-        await Promise.all(promises);
-        return true;
-      } catch (nestedError) {
-        console.error('[Service Worker] Error al cargar recursos individualmente:', nestedError);
-        return false;
-      }
-    }
-    
-    return false;
-  }
-};
-
-// Instalación del Service Worker
+// Instalación: Cachear recursos estáticos
 self.addEventListener('install', event => {
-  console.log('[Service Worker] Iniciando instalación...');
-  
-  // Realiza la instalación
   event.waitUntil(
-    installResources()
-      .then(success => {
-        if (success) {
-          console.log('[Service Worker] Instalación completada con éxito');
-          // Forzar la activación del nuevo service worker
-          return self.skipWaiting();
-        } else {
-          console.warn('[Service Worker] La instalación tuvo algunos problemas');
-          // Aunque haya habido problemas, continuamos con la activación
-          return self.skipWaiting();
-        }
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('[Service Worker] Almacenando en caché recursos estáticos');
+        return cache.addAll(urlsToCache);
       })
-      .catch(error => {
-        console.error('[Service Worker] Error crítico durante la instalación:', error);
-        // Aunque falle, intentamos continuar
+      .then(() => {
+        console.log('[Service Worker] Instalación completada');
         return self.skipWaiting();
       })
   );
 });
 
-// Función para limpiar cachés antiguas
-const cleanOldCaches = async () => {
-  try {
-    const cacheNames = await caches.keys();
-    const currentCacheName = CACHE_NAME;
-    
-    await Promise.all(
-      cacheNames
-        .filter(cacheName => {
-          // Mantener solo las cachés de esta aplicación que no sean la actual
-          return cacheName.startsWith('plataforma-consultas-cache-') && 
-                 cacheName !== currentCacheName;
+// Estrategia: Cache First para recursos estáticos
+self.addEventListener('fetch', event => {
+  // Ignorar solicitudes a sitios externos
+  if (!event.request.url.startsWith(self.location.origin)) {
+    return;
+  }
+
+  // Para navegación, intentar red primero, luego caché
+  if (event.request.mode === 'navigate') {
+    event.respondWith(
+      fetch(event.request)
+        .then(response => {
+          // Si la respuesta es exitosa, actualizar caché
+          if (response && response.status === 200) {
+            const responseToCache = response.clone();
+            caches.open(CACHE_NAME)
+              .then(cache => cache.put(event.request, responseToCache));
+          }
+          return response;
         })
-        .map(cacheName => {
-          console.log('[Service Worker] Eliminando caché antigua:', cacheName);
-          return caches.delete(cacheName);
+        .catch(() => {
+          // Si falla, intentar obtener de la caché
+          return caches.match(event.request)
+            .then(response => response || caches.match(OFFLINE_URL));
         })
     );
-    
-    console.log('[Service Worker] Limpieza de cachés antiguas completada');
-    return true;
-  } catch (error) {
-    console.error('[Service Worker] Error al limpiar cachés antiguas:', error);
-    return false;
+  } else {
+    // Para otros recursos, intentar caché primero
+    event.respondWith(
+      caches.match(event.request)
+        .then(response => {
+          // Si está en caché, devolverla
+          if (response) {
+            return response;
+          }
+          // Si no está en caché, obtener de la red
+          return fetch(event.request)
+            .then(networkResponse => {
+              // Si es exitosa, guardar en caché para futuras peticiones
+              if (networkResponse && networkResponse.status === 200) {
+                const responseToCache = networkResponse.clone();
+                caches.open(CACHE_NAME)
+                  .then(cache => cache.put(event.request, responseToCache));
+              }
+              return networkResponse;
+            });
+        })
+    );
   }
-};
-
-// Activación del Service Worker
-self.addEventListener('activate', event => {
-  console.log('[Service Worker] Activando...');
-  
-  // No esperar a que termine la limpieza para tomar control
-  event.waitUntil(
-    Promise.all([
-      // Limpiar cachés antiguas
-      cleanOldCaches(),
-      // Tomar control de los clientes inmediatamente
-      self.clients.claim()
-    ]).then(() => {
-      console.log('[Service Worker] Activación completada');
-    })
-  );
 });
 
-// Función para manejar solicitudes de navegación
-const handleNavigationRequest = async (request) => {
-  try {
-    // Intentar obtener de la red primero
-    const networkResponse = await fetch(request);
-    
-    // Si la respuesta es exitosa, actualizar la caché
-    if (networkResponse && networkResponse.status === 200) {
-      const responseClone = networkResponse.clone();
-      const cache = await caches.open(CACHE_NAME);
-      console.log('[Service Worker] Actualizando caché de navegación para:', request.url);
-      await cache.put(request, responseClone);
-    }
-    
-    return networkResponse;
-  } catch (error) {
-    console.log('[Service Worker] Modo offline, sirviendo desde caché');
-    
-    // Intentar servir desde la caché
-    const cachedResponse = await caches.match('/App_Consultas-main/index.html');
-    if (cachedResponse) {
-      return cachedResponse;
-    }
-    
-    // Si no hay nada en caché, mostrar la página offline
-    const offlineResponse = await caches.match('/App_Consultas-main/offline.html');
-    if (offlineResponse) {
-      return offlineResponse;
-    }
-    
-    // Como último recurso, devolver una respuesta de error personalizada
-    return new Response(
-      '<h1>Estás sin conexión</h1><p>No se pudo cargar la página solicitada.</p>',
-      { headers: { 'Content-Type': 'text/html' } }
-    );
-  }
-};
-
-// Función para manejar solicitudes de recursos de imagen
-const handleImageRequest = async (request) => {
-  // Para imágenes, usamos una estrategia de caché primero con actualización en segundo plano
-  // y soporte para imágenes de marcador de posición en caso de error
-  try {
-    // Primero intentar obtener de la caché
-    const cachedResponse = await caches.match(request, { ignoreVary: true });
-    
-    // En paralelo, intentar actualizar desde la red
-    const networkPromise = fetch(request, { cache: 'reload' }).then(networkResponse => {
-      // Si la respuesta es exitosa, actualizar la caché
-      if (networkResponse && networkResponse.status === 200) {
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then(cache => {
-          cache.put(request, responseToCache)
-            .then(() => console.log(`[Service Worker] Imagen actualizada en caché: ${request.url}`))
-            .catch(console.warn);
-        });
-      }
-      return networkResponse;
-    }).catch(console.warn);
-    
-    // Si tenemos una respuesta en caché, devolverla inmediatamente
-    // mientras se actualiza en segundo plano
-    if (cachedResponse) {
-      console.log(`[Service Worker] Sirviendo imagen desde caché: ${request.url}`);
-      return cachedResponse;
-    }
-    
-    // Si no hay en caché, esperar por la respuesta de red
-    const networkResponse = await networkPromise;
-    if (networkResponse) {
-      return networkResponse;
-    }
-    
-    // Si todo falla, devolver una imagen de marcador de posición
-    return new Response(
-      '<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#f0f0f0"/><text x="50" y="50" font-family="Arial" font-size="10" text-anchor="middle" dominant-baseline="middle" fill="#999">Imagen no disponible</text></svg>',
-      { 
-        headers: { 'Content-Type': 'image/svg+xml' }
-      }
-    );
-  } catch (error) {
-    console.error(`[Service Worker] Error al manejar imagen ${request.url}:`, error);
-    
-    // Devolver una imagen de marcador de posición en caso de error
-    return new Response(
-      '<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="#f0f0f0"/><text x="50" y="50" font-family="Arial" font-size="10" text-anchor="middle" dominant-baseline="middle" fill="#999">Error al cargar</text></svg>',
-      { 
-        headers: { 'Content-Type': 'image/svg+xml' }
-      }
-    );
-  }
-};
-
-// Función para manejar solicitudes de fuentes web
+// Limpiar cachés antiguas al activarse
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
+  
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (!cacheWhitelist.includes(cacheName)) {
+            console.log(`[Service Worker] Eliminando caché antigua: ${cacheName}`);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+    .then(() => self.clients.claim())
+  );
+});
 const handleFontRequest = async (request) => {
   // Para fuentes, usamos una estrategia de caché primero con actualización en segundo plano
   try {
