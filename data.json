@@ -61,6 +61,11 @@
       "title": "Consulta Cédula (Venezuela)",
       "icon": "fa-solid fa-id-card",
       "url": "https://www.sistemaspnp.com/cedula/"
+    },
+    {
+      "title": "Consulta Fonasa",
+      "icon": "fa-solid fa-hospital-user",
+      "url": "http://unisag.cormudesi.cl/uniehr/fonasa/view/visor_fonasa.phtml"
     }
   ],
   "otros": [
