@@ -19,6 +19,11 @@
       "title": "Consulta transporte público",
       "icon": "fa-solid fa-bus",
       "url": "https://apps.mtt.cl/consultaweb/"
+    },
+    {
+      "title": "Consulta Revisión Técnica",
+      "icon": "fa-solid fa-clipboard-check",
+      "url": "https://www.prt.cl/Paginas/RevisionTecnica.aspx"
     }
   ],
   "personas": [
