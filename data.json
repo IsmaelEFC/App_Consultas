@@ -40,7 +40,7 @@
     {
       "title": "Consulta situación migratoria",
       "icon": "fa-solid fa-globe",
-      "url": "https://apps-publicas.interior.gob.cl/situacion-migratoria-web/login_inicio"
+      "url": "https://situacionmigratoria.serviciomigraciones.cl"
     },
     {
       "title": "Consulta prestadores de salud",
