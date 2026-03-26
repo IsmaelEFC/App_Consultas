@@ -58,6 +58,11 @@
       "url": "https://oficinajudicialvirtual.pjud.cl/indexN.php"
     },
     {
+      "title": "Visor FONASA (UniEHR)",
+      "icon": "fa-solid fa-hospital-user",
+      "url": "http://unisag.cormudesi.cl/uniehr/fonasa/view/visor_fonasa.phtml#"
+    },
+    {
       "title": "Antecedentes Judiciales (Colombia)",
       "icon": "fa-solid fa-gavel",
       "url": "https://antecedentes.policia.gov.co:7005/WebJudicial/"
