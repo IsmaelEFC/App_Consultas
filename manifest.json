@@ -1,0 +1,38 @@
+{
+  "name": "SIOC OSINT - Inteligencia de Fuentes Abiertas",
+  "short_name": "SIOC OSINT",
+  "description": "Plataforma centralizada para consultas OSINT de vehículos, personas y servicios públicos.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f0f4f8",
+  "theme_color": "#6366f1",
+  "prefer_related_applications": false,
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Vehículos",
+      "short_name": "Vehículos",
+      "url": "./index.html?section=vehiculos"
+    },
+    {
+      "name": "Personas",
+      "short_name": "Personas",
+      "url": "./index.html?section=personas"
+    }
+  ]
+}
