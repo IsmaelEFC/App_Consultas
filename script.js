@@ -37,9 +37,18 @@ if (window.matchMedia) {
  * @returns {string} HTML de la tarjeta
  */
 function createCard(item) {
+  const isTool = item.type === 'tool';
+  const href = isTool ? '#' : item.url;
+  const extraAttrs = isTool
+    ? `data-tool="${item.toolId || ''}" role="button"`
+    : 'target="_blank" rel="noopener noreferrer"';
+  const ariaLabel = isTool ? item.title : `${item.title} - abre en nueva ventana`;
+  const footerLabel = isTool ? 'Abrir herramienta' : 'Visitar sitio';
+  const footerIcon = isTool ? 'fa-solid fa-arrow-right' : 'fa-solid fa-arrow-up-right-from-square';
+
   return `
     <div class="card" role="listitem">
-      <a href="${item.url}" target="_blank" rel="noopener noreferrer" aria-label="${item.title} - abre en nueva ventana">
+      <a href="${href}" ${extraAttrs} aria-label="${ariaLabel}">
         <div class="card-content">
           <div class="icon-container" aria-hidden="true">
             <i class="${item.icon}"></i>
@@ -47,7 +56,7 @@ function createCard(item) {
           <h2 class="card-title">${item.title}</h2>
           ${item.credentials ? `<p class="credentials" aria-label="Credenciales: ${item.credentials}">${item.credentials}</p>` : ''}
           <div class="card-footer">
-            <span class="visit-link">Visitar sitio <i class="fa-solid fa-arrow-up-right-from-square"></i></span>
+            <span class="visit-link">${footerLabel} <i class="${footerIcon}" aria-hidden="true"></i></span>
           </div>
         </div>
       </a>
@@ -153,6 +162,150 @@ function initSearch() {
   }
 }
 
+function formatRutNumber(rutDigits) {
+  const cleaned = String(rutDigits || '').replace(/\D/g, '');
+  if (!cleaned) return '';
+  const reversed = cleaned.split('').reverse();
+  const parts = [];
+  for (let i = 0; i < reversed.length; i += 3) {
+    parts.push(reversed.slice(i, i + 3).reverse().join(''));
+  }
+  return parts.reverse().join('.');
+}
+
+function computeRutDv(rutDigits) {
+  const cleaned = String(rutDigits || '').replace(/\D/g, '');
+  if (!cleaned) return null;
+
+  let sum = 0;
+  let factor = 2;
+  for (let i = cleaned.length - 1; i >= 0; i -= 1) {
+    sum += Number(cleaned[i]) * factor;
+    factor = factor === 7 ? 2 : factor + 1;
+  }
+  const mod = 11 - (sum % 11);
+  if (mod === 11) return '0';
+  if (mod === 10) return 'K';
+  return String(mod);
+}
+
+function openRutDvModal() {
+  const modal = document.getElementById('rut-dv-modal');
+  if (!modal) return;
+  modal.classList.remove('hidden');
+
+  const input = document.getElementById('rut-dv-input');
+  const result = document.getElementById('rut-dv-result');
+  if (result) {
+    result.classList.add('hidden');
+    result.innerHTML = '';
+  }
+  if (input) {
+    input.value = '';
+    input.focus();
+  }
+}
+
+function closeRutDvModal() {
+  const modal = document.getElementById('rut-dv-modal');
+  if (!modal) return;
+  modal.classList.add('hidden');
+}
+
+function renderRutDvResult(rutDigits) {
+  const result = document.getElementById('rut-dv-result');
+  if (!result) return;
+
+  const dv = computeRutDv(rutDigits);
+  if (!dv) {
+    result.classList.add('hidden');
+    result.innerHTML = '';
+    return;
+  }
+
+  const formattedRut = formatRutNumber(rutDigits);
+  const fullRut = `${formattedRut}-${dv}`;
+  result.classList.remove('hidden');
+  result.innerHTML = `
+    <div class="result-text">
+      <div>${fullRut}</div>
+      <div class="result-meta">DV: ${dv}</div>
+    </div>
+    <button class="secondary-button" type="button" data-copy="${fullRut}">Copiar</button>
+  `;
+}
+
+function initRutDvTool() {
+  document.addEventListener('click', (e) => {
+    const toolLink = e.target.closest('[data-tool]');
+    if (toolLink) {
+      const toolId = toolLink.getAttribute('data-tool');
+      if (toolId === 'rut_dv') {
+        e.preventDefault();
+        openRutDvModal();
+      }
+      return;
+    }
+
+    const closeBtn = e.target.closest('[data-modal-close]');
+    if (closeBtn) {
+      e.preventDefault();
+      closeRutDvModal();
+      return;
+    }
+
+    const copyBtn = e.target.closest('[data-copy]');
+    if (copyBtn) {
+      e.preventDefault();
+      const text = copyBtn.getAttribute('data-copy') || '';
+      if (!text) return;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).catch(() => {});
+      }
+      return;
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const modal = document.getElementById('rut-dv-modal');
+    if (!modal || modal.classList.contains('hidden')) return;
+    closeRutDvModal();
+  });
+
+  const input = document.getElementById('rut-dv-input');
+  const calcBtn = document.getElementById('rut-dv-calc');
+  const clearBtn = document.getElementById('rut-dv-clear');
+
+  if (input) {
+    input.addEventListener('input', () => {
+      renderRutDvResult(input.value);
+    });
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        renderRutDvResult(input.value);
+      }
+    });
+  }
+
+  if (calcBtn) {
+    calcBtn.addEventListener('click', () => {
+      if (!input) return;
+      renderRutDvResult(input.value);
+    });
+  }
+
+  if (clearBtn) {
+    clearBtn.addEventListener('click', () => {
+      if (!input) return;
+      input.value = '';
+      renderRutDvResult('');
+      input.focus();
+    });
+  }
+}
+
 // --- PWA & SERVICE WORKER ---
 
 function initPWA() {
@@ -196,6 +349,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   applySystemTheme();
   initPWA();
   initSearch();
+  initRutDvTool();
 
   const navButtons = document.querySelectorAll('.nav-button');
   navButtons.forEach(btn => {

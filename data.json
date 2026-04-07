@@ -38,6 +38,13 @@
       "url": "https://rutificador.histomed.cl/index.php"
     },
     {
+      "title": "Calcular DV RUT (Chile)",
+      "icon": "fa-solid fa-calculator",
+      "type": "tool",
+      "toolId": "rut_dv",
+      "url": "#rut-dv"
+    },
+    {
       "title": "Consulta situación migratoria",
       "icon": "fa-solid fa-globe",
       "url": "https://situacionmigratoria.serviciomigraciones.cl/login_inicio"
