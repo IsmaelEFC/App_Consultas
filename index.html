@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Plataforma de consultas OSINT - Acceso rápido a fuentes abiertas para vehículos, personas y otros servicios." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com;">
+  <title>Consulta OSINT</title>
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#1a1d23" />
+  <meta name="application-name" content="Consulta OSINT" />
+  <meta name="apple-mobile-web-app-title" content="OSINT" />
+  <meta name="msapplication-TileColor" content="#1a1d23" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+  <link rel="shortcut icon" href="icons/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js', { scope: './' }).catch(() => {});
+      });
+    }
+  </script>
+</head>
+<body>
+  <div id="app">
+    <header>
+      <div class="header-inner">
+        <div class="logo-area">
+          <div class="logo-icon">
+            <i class="fa-solid fa-compass"></i>
+          </div>
+          <div class="logo-text">
+            <h1>Consulta OSINT</h1>
+            <span class="logo-sub">Fuentes abiertas</span>
+          </div>
+        </div>
+        <div class="search-wrapper">
+          <div class="search-box">
+            <i class="fa-solid fa-search search-icon"></i>
+            <input type="text" id="search-input" placeholder="Buscar servicio..." autocomplete="off" />
+            <button class="search-clear" id="search-clear" aria-label="Limpiar búsqueda">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <nav class="tabs-nav">
+        <button class="tab-btn active" data-section="vehiculos">
+          <i class="fa-solid fa-car"></i>
+          <span>Vehículos</span>
+          <span class="tab-count" id="count-vehiculos">0</span>
+        </button>
+        <button class="tab-btn" data-section="personas">
+          <i class="fa-solid fa-address-card"></i>
+          <span>Personas</span>
+          <span class="tab-count" id="count-personas">0</span>
+        </button>
+        <button class="tab-btn" data-section="otros">
+          <i class="fa-solid fa-globe"></i>
+          <span>Otros</span>
+          <span class="tab-count" id="count-otros">0</span>
+        </button>
+        <div class="tab-indicator" id="tab-indicator"></div>
+      </nav>
+
+      <section id="vehiculos" class="section active">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-car"></i> Vehículos</h2>
+          <p class="section-desc">Consultas vehiculares y de transporte</p>
+        </div>
+        <div class="cards-grid"></div>
+        <div class="empty-state">
+          <i class="fa-solid fa-search-minus"></i>
+          <p>No se encontraron resultados</p>
+        </div>
+      </section>
+
+      <section id="personas" class="section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-address-card"></i> Personas</h2>
+          <p class="section-desc">Identificación, antecedentes y situación legal</p>
+        </div>
+        <div class="cards-grid"></div>
+        <div class="empty-state">
+          <i class="fa-solid fa-search-minus"></i>
+          <p>No se encontraron resultados</p>
+        </div>
+      </section>
+
+      <section id="otros" class="section">
+        <div class="section-header">
+          <h2><i class="fa-solid fa-globe"></i> Otros Servicios</h2>
+          <p class="section-desc">Consultas adicionales de utilidad pública</p>
+        </div>
+        <div class="cards-grid"></div>
+        <div class="empty-state">
+          <i class="fa-solid fa-search-minus"></i>
+          <p>No se encontraron resultados</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Ismael Flores 2025 &mdash; Plataforma OSINT</p>
+    </footer>
+  </div>
+
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
