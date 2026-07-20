@@ -270,28 +270,28 @@ header {
 /* --- DV TOOL --- */
 .card-tool {
   cursor: default;
-  display: flex; flex-direction: column;
   padding: 20px;
+  overflow: hidden;
 }
 .card-tool:hover { transform: translateY(-4px); }
 
 .dv-header {
   display: flex; align-items: center; gap: 10px;
-  font-size: 0.9rem; font-weight: 500; color: var(--text-secondary);
-  margin-bottom: 16px;
+  font-size: 0.85rem; font-weight: 500; color: var(--text-secondary);
+  margin-bottom: 14px;
 }
-.dv-header i { font-size: 1rem; color: var(--emerald); }
+.dv-header i { font-size: 0.95rem; color: var(--emerald); }
 
-.card-tool .card-content { padding: 0; }
+.card-tool .card-content { padding: 0; width: 100%; }
+.dv-widget { width: 100%; }
 
 .dv-input-group {
   display: flex; align-items: stretch;
-  width: 100%; max-width: 340px; margin: 0 auto;
+  width: 100%; max-width: 300px; margin: 0 auto;
   background: var(--bg-secondary); border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.04);
   box-shadow: inset 3px 3px 7px var(--neu-inset-dark), inset -3px -3px 7px var(--neu-inset-light);
   transition: var(--transition);
-  overflow: hidden;
 }
 .dv-input-group:focus-within {
   border-color: rgba(16, 185, 129, 0.3);
@@ -299,20 +299,20 @@ header {
 }
 
 .dv-input {
-  flex: 1; min-width: 0; padding: 12px 14px; background: transparent; border: none;
-  color: var(--text-primary); font-size: 1rem; font-family: inherit;
-  outline: none; letter-spacing: 0.08em; font-weight: 600;
+  flex: 1; min-width: 0; padding: 10px 12px; background: transparent; border: none;
+  color: var(--text-primary); font-size: 0.95rem; font-family: inherit;
+  outline: none; letter-spacing: 0.06em; font-weight: 600;
 }
-.dv-input::placeholder { color: var(--text-muted); font-weight: 400; letter-spacing: 0; font-size: 0.85rem; }
+.dv-input::placeholder { color: var(--text-muted); font-weight: 400; letter-spacing: 0; font-size: 0.8rem; }
 
 .dv-display {
   display: flex; align-items: center; justify-content: center;
-  width: 72px; flex-shrink: 0;
+  width: 64px; flex-shrink: 0;
   border-left: 1px solid rgba(255, 255, 255, 0.06);
   background: rgba(255, 255, 255, 0.02);
 }
 .dv-display-value {
-  font-size: 1.3rem; font-weight: 800; color: var(--text-muted);
+  font-size: 1.2rem; font-weight: 800; color: var(--text-muted);
   font-family: 'Inter', monospace; transition: var(--transition);
   line-height: 1;
 }
